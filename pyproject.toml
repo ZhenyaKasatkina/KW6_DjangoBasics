@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "kw6-djangobasics"
+version = "0.1.0"
+description = ""
+authors = ["ZhenyaKasatkina <knopisha.zh@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+django = "5.0.4"
+psycopg2-binary = "^2.9.9"
+pillow = "^10.3.0"
+pytz = "^2024.1"
+requests = "^2.31.0"
+django-crontab = "^0.7.1"
+redis = "^5.0.4"
+python-dotenv = "^1.0.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

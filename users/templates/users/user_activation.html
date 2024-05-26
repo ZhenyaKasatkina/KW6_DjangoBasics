@@ -1,0 +1,45 @@
+{% extends 'email_newsletter/base.html' %}
+{% block content %}
+
+<main>
+    <section class="py-5 text-center container">
+        <div class="row py-lg-5">
+            <div class="col-6 col-md-8 mx-auto">
+                <h5 class="mb-6">Активация / Деактивация пользователя {{ object.email }}</h5>
+                <a href="{% url 'email_newsletter:homepage' %}" class="btn btn-success my-2">
+                    Вернуться на главную страницу</a>
+            </div>
+        </div>
+    </section>
+
+
+    <div class="album py-5 bg-body-tertiary">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-1 g-3">
+                <div class="row">
+                    <div class="col-2"></div>
+                    <div class="col-8">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <form method="post" action="" class="form-floating text-center"
+                                      enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="form-row field-start_data mb-3">
+                                        {{form.as_table}}
+                                    </div>
+                                    <button type="submit" class="p-2 btn  btn-success my-2 mb-2">Сохранить изменения
+                                    </button>
+                                    <a class="p-2 btn btn-dark my-2 mb-2"
+                                       href="{% url 'users:users' %}" role="button">
+                                        Вернуться без сохранения</a>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}

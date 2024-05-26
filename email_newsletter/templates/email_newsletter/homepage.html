@@ -1,0 +1,148 @@
+{% extends 'email_newsletter/base.html' %}
+{% block content %}
+
+<main>
+    <section class="py-6 text-center container">
+        <div class="row py-lg-5">
+            <div class="col-6 col-md-8 mx-auto">
+                <h4 class="mb-4">{{ title }}</h4>
+                <p class="lead text-body-secondary mb-5">{{ text }}</p>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    <div class="row mb-5">
+                        <div class="card-header">
+                            <h6 class="text-secondary mb-4">Интересные статьи по теме</h6>
+                            <div class="card-body">
+                                <div id="myCarousel" class="carousel slide mb-6" data-bs-ride="carousel">
+                                    <div class="carousel-indicators">
+                                        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0"
+                                                class="active"
+                                                aria-current="true" aria-label="Slide 1"></button>
+                                        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1"
+                                                aria-label="Slide 2"></button>
+                                        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2"
+                                                aria-label="Slide 3"></button>
+                                    </div>
+
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active">
+                                            <img src="{{ blog_list.0.preview.url }}" class="card-img-top"/>
+                                            <div class="container">
+                                                <div class="carousel-caption">
+                                                    <h5 class="text-dark mb-5 shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+                                                        {{ blog_list.0.title }}.</h5>
+                                                    <p><a class="btn btn-lg btn-success"
+                                                          href="{% url 'blog:view_blog' blog_list.0.pk %}">Подробнее</a>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="{{ blog_list.1.preview.url }}" class="card-img-top"/>
+                                            <div class="container">
+                                                <div class="carousel-caption">
+                                                    <h5 class="text-dark mb-5 shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+                                                        {{ blog_list.1.title }}.</h5>
+                                                    <p><a class="btn btn-lg btn-success"
+                                                          href="{% url 'blog:view_blog' blog_list.1.pk %}">Подробнее</a>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="{{ blog_list.2.preview.url }}" class="card-img-top">
+                                            <div class="container">
+                                                <div class="carousel-caption ">
+                                                    <h5 class="text-dark mb-5 shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+                                                        {{ blog_list.2.title }}.</h5>
+                                                    <p class="mb-5"></p>
+                                                    <p><a class="btn btn-lg btn-success"
+                                                          href="{% url 'blog:view_blog' blog_list.2.pk %}">Подробнее</a>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel"
+                                            data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel"
+                                            data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="card border-success mb-3">
+                            <div class="card-header">
+                                <h6 class="text-secondary mb-3">Статистика работы сайта</h6>
+                                <div class="card-body">
+                                    <p>Общее количество рассылок, созданных н этом сайте:
+                                        <strong>{{ count_mailings }}.</strong></p>
+                                    <p>В настоящее время количество активных рассылок:
+                                        <strong>{{ count_mailings_is_active }}.</strong></p>
+                                    <p>Создано уникальных клиентов для рассылок:
+                                        <strong>{{ unique_clients }}.</strong></p>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="alert alert-success" role="alert">
+                        Для просмотра списка РАССЫЛОК перейдите по
+                        <a href="{% url 'email_newsletter:newsletter' %}"
+                           class="alert-link">этой</a> ссылке.
+                    </div>
+                    <div class="alert alert-success" role="alert">
+                        Для просмотра списка КЛИЕНТОВ перейдите по
+                        <a href="{% url 'email_newsletter:client' %}"
+                           class="alert-link">этой</a> ссылке.
+                    </div>
+                    <div class="alert alert-success" role="alert">
+                        Для просмотра списка СООБЩЕНИЙ перейдите по
+                        <a href="{% url 'email_newsletter:message' %}"
+                           class="alert-link">этой</a> ссылке.
+                    </div>
+                    <div class="alert alert-success" role="alert">
+                        Для просмотра ОТЧЕТА проведенных рассылок перейдите по
+                        <a href="{% url 'email_newsletter:mailing_report' %}"
+                           class="alert-link">этой</a> ссылке.
+                    </div>
+                    {% if perms.users.can_view_list_users %}
+                    <div class="alert alert-success" role="alert">
+                        Для просмотра СПИСКА Пользователей сайта перейдите по
+                        <a href="{% url 'users:users' %}"
+                           class="alert-link">этой</a> ссылке.
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <div class="album py-5 bg-body-tertiary">
+        <div class="container">
+            <div class="row ">
+                <div class="col text-center">
+                    <h6 class="text">!место для рекламы!</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+{% endblock %}

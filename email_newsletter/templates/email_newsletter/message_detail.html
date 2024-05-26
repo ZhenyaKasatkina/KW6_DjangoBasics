@@ -1,0 +1,45 @@
+{% extends 'email_newsletter/base.html' %}
+{% block content %}
+
+<main>
+    <section class="py-6 text-center container">
+        <div class="row py-lg-5">
+            <div class="col-6 col-md-8 mx-auto">
+                <h5>{{ title }}</h5>
+                <p class="lead text-body-secondary">{{ text }}</p>
+                <p>
+                    <a href="{% url 'email_newsletter:create_message' %}" class="btn btn-success my-2">
+                        {{ create_object }}</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <div class="album py-5 bg-body-tertiary">
+        <div class="container">
+                <div class="row">
+                    <div class="col-2"></div>
+                    <div class="col-8">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <h3> {{ object.subject }}</h3>
+                                <p class="text">{{ object.body }}</p>
+                            </div>
+                            <div class="card-footer">
+                                 {% if object.owner %}
+                                <a class="p-2 btn btn-success my-2 mb-2"
+                                   href="{% url 'email_newsletter:update_message' object.pk %}" role="button">
+                                    Изменить сообщение</a>
+                                {% endif %}
+                                <a class="p-2 btn btn-dark my-2 mb-2"
+                                   href="{% url 'email_newsletter:message' %}" role="button">
+                                    Вернуться к списку сообщений</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}
