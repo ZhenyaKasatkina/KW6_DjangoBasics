@@ -1,0 +1,42 @@
+{% extends 'email_newsletter/base.html' %}
+{% block content %}
+
+<main>
+    <section class="py-6 text-center container">
+        <div class="row py-lg-5">
+            <div class="col-6 col-md-8 mx-auto">
+                <h5 class="mb-4">{{ title }}</h5>
+                <p class="lead text-body-secondary">{{ text }}</p>
+                <p>
+                    <a href="{% url 'email_newsletter:homepage' %}" class="btn btn-dark my-2">
+                        Вернуться на главную</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <div class="album py-5 bg-body-tertiary">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                <ol class="list-group list-group-numbered">
+                    {% for object in object_list %}
+                    <li class="list-group-item">{{ object }}
+                        {% if object.is_active %}
+                        <p class="text-success">Пользователь активный</p>
+                        <a type="button" class="btn btn-sm btn-outline-secondary"
+                           href="{% url 'users:user_activation' object.pk %}">
+                            Деактивация</a>
+                        {% else %}
+                        <p class="text-secondary">Пользователь неактивный</p>
+                        <a type="button" class="btn btn-sm btn-outline-success"
+                           href="{% url 'users:user_activation' object.pk %}">
+                            Активация</a>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ol>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

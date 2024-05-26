@@ -1,0 +1,55 @@
+{% extends 'email_newsletter/base.html' %}
+{% block content %}
+
+<main>
+    <section class="py-6 text-center container">
+        <div class="row py-lg-5">
+            <div class="col-6 col-md-8 mx-auto">
+                <h5>{{ title }}</h5>
+                <p class="lead text-body-secondary">{{ text }}</p>
+                <p>
+                    <a href="{% url 'email_newsletter:create_newsletter' %}" class="btn btn-success my-2">
+                        {{ create_object }}</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <div class="album py-5 bg-body-tertiary">
+        <div class="container">
+
+                <div class="row">
+                    <div class="col-2"></div>
+                    <div class="col-8">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <h3> Рассылка № {{ object.pk }}</h3>
+                                <p class="card-text">Дата создания рассылки: {{ object.start_data }}</p>
+                                 {% if object.end_data %}
+                            <p class="card-text">Дата завершения направления рассылок: {{ object.end_data }}</p>
+                            {% endif %}
+                             {% if not object.end_data %}
+                            <p class="card-text">Дата завершения направления рассылок не установлена</p>
+                            {% endif %}
+                                <p class="card-text">Периодичность: {{ object.periodicity }}</p>
+                                <p class="card-text">{{ object.message }}</p>
+                                <p class="card-text">Статус: {{ object.status }}</p>
+                            </div>
+                            <div class="card-footer">
+                                {% if object.owner %}
+                                <a class="p-2 btn btn-success my-2 mb-2"
+                                   href="{% url 'email_newsletter:update_newsletter' object.pk %}" role="button">
+                                    Изменить рассылку</a>
+                                {% endif %}
+                                <a class="p-2 btn btn-dark my-2 mb-2"
+                                   href="{% url 'email_newsletter:newsletter' %}" role="button">
+                                    Вернуться к списку рассылок</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}

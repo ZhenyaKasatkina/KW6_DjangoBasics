@@ -1,0 +1,40 @@
+{% extends 'email_newsletter/base.html' %}
+{% block content %}
+
+<main>
+    <section class="py-6 text-center container">
+        <div class="row py-lg-5">
+            <div class="col-6 col-md-8 mx-auto">
+                <h5>{{ title }}</h5>
+                <p class="lead text-body-secondary">{{ text }}</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="album py-5 bg-body-tertiary">
+        <div class="container">
+            <div class="row">
+                <div class="col-2"></div>
+                <div class="col-8">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h3 class="mb-4"> {{ object.title }}</h3>
+                             <h6 class="text-secondary">Количество просмотров статьи: {{ object.views_count }}</h6>
+
+                            <img src="{{ object.preview.url }}" class="img-fluid"/>
+                            <p class="fs-5">{{ object.content }}</p>
+                        </div>
+                        <div class="card-footer">
+
+                            <a class="p-2 btn btn-dark my-2 mb-2"
+                               href="{% url 'email_newsletter:homepage' %}" role="button">
+                                Вернуться на главную страницу</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}

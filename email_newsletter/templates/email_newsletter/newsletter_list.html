@@ -1,0 +1,69 @@
+{% extends 'email_newsletter/base.html' %}
+{% block content %}
+
+<main>
+    <section class="py-6 text-center container">
+        <div class="row py-lg-5">
+            <div class="col-6 col-md-8 mx-auto">
+                <h5>{{ title }}</h5>
+                <p class="lead text-body-secondary">{{ text }}</p>
+
+                <p>
+                    <a href="{% url 'email_newsletter:create_newsletter' %}" class="btn btn-success my-2">
+                        {{ create_object }}</a>
+                    <a href="{% url 'email_newsletter:homepage' %}" class="btn btn-dark my-2">
+                        Вернуться на главную</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <div class="album py-5 bg-body-tertiary">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+                {% for object in object_list %}
+                <div class="col">
+                    <div class="card border-success mb-3" style="max-width: 18rem;">
+                        <h4 class="card-header ">Рассылка № {{ object.pk }}</h4>
+                        <div class="card-body">
+                            {% if object.end_data %}
+                            <p class="card-text">Период: {{ object.start_data }} - {{ end.start_data }}</p>
+                            {% endif %}
+                            {% if not object.end_data %}
+                            <p class="card-text">Дата начала: {{ object.start_data }}</p>
+                            {% endif %}
+                            <p class="card-text">Периодичность: {{ object.periodicity }}</p>
+                            <p class="card-text">Сообщение: {{ object.message|truncatechars:30 }}</p>
+                            <p class="card-text">Создатель: {{ object.owner }}</p>
+                            <p class="card-text">Статус: {{ object.status }}</p>
+                            {% if perms.email_newsletter.cancel_active_status or object.owner.is_superuser %}
+                            <p class="card-text">Активность: {{ object.is_active }}</p>
+                            {% endif %}
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    {% if perms.email_newsletter.cancel_active_status or object.owner%}
+                                    <a type="button" class="btn btn-sm btn-outline-secondary"
+                                       href="{% url 'email_newsletter:view_newsletter' object.pk %}">Показать</a>
+                                    {% endif %}
+                                    {% if object.owner %}
+                                    <a type="button" class="btn btn-sm btn-outline-secondary"
+                                       href="{% url 'email_newsletter:update_newsletter' object.pk %}">Изменить</a>
+                                    <a type="button" class="btn btn-sm btn-outline-secondary"
+                                       href="{% url 'email_newsletter:delete_newsletter' object.pk %}">Удалить</a>
+                                    {% endif %}
+                                    {% if perms.email_newsletter.cancel_active_status and not object.owner %}
+                                    <a type="button" class="btn btn-sm btn-outline-secondary"
+                                       href="{% url 'email_newsletter:update_newsletter' object.pk %}">Деактивировать</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

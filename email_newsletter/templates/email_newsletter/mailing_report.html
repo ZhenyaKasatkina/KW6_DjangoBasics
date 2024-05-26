@@ -1,0 +1,61 @@
+{% extends 'email_newsletter/base.html' %}
+{% block content %}
+
+<main>
+    <section class="py-6 text-center container">
+        <div class="row py-lg-5">
+            <div class="col-6 col-md-8 mx-auto">
+                <h5>{{ title }}</h5>
+                <p class="lead text-body-secondary">{{ text }}</p>
+                <p>
+                    <a href="{% url 'email_newsletter:homepage' %}" class="btn btn-success my-2">
+                    Вернуться на главную</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <div class="album py-5 bg-body-tertiary">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Получатель</th>
+                        <th scope="col">тема сообщения</th>
+                        <th scope="col">время/дата попытки</th>
+                        <th scope="col">Статус отправки</th>
+                        <th scope="col">Ответ почтового сервера</th>
+                    </tr>
+                    </thead>
+                    {% for client in clients %}
+                    {% for newsletter in newsletters %}
+                    {% for attempt in attempts %}
+                    {% if newsletter in client.newsletter.all %}
+                    {% if attempt in newsletter.attempt.all %}
+
+                    <tbody>
+                    <tr>
+                        <th scope="row">*</th>
+
+                        <td>{{ client.email }}</td>
+                        <td>{{ newsletter.message.subject }}</td>
+                        <td>{{attempt.last_data}}</td>
+                        <td>{{attempt.status}}</td>
+                        <td>{{attempt.answer}}</td>
+                    </tr>
+                    </tbody>
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                    {% endfor %}
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+
+</main>
+{% endblock %}

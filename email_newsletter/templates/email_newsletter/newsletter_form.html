@@ -1,0 +1,42 @@
+{% extends 'email_newsletter/base.html' %}
+{% block content %}
+
+<main>
+    <section class="py-5 text-center container">
+        <div class="row py-lg-5">
+            <div class="col-6 col-md-8 mx-auto">
+                <h5>{{ title }}</h5>
+                <p class="lead text-body-secondary">{{ text }}</p>
+
+            </div>
+        </div>
+    </section>
+
+    <div class="album py-5 bg-body-tertiary">
+        <div class="container">
+            <div class="row">
+                <div class="col-2"></div>
+                <div class="col-8">
+                    <div class="card shadow-sm">
+                        <form method="post" action="" class="form-floating text-center"
+                              enctype="multipart/form-data">
+                            <div class="card-body">
+                                {% csrf_token %}
+                                {{form.as_table}}
+                            </div>
+                            <div class="card-footer">
+                                <button type="submit" class="p-2 btn  btn-success my-2 mb-2">Сохранить
+                                </button>
+                                <a class="p-2 btn btn-dark my-2 mb-2"
+                                   href="{% url 'email_newsletter:newsletter' %}" role="button">
+                                    Вернуться без сохранения</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}

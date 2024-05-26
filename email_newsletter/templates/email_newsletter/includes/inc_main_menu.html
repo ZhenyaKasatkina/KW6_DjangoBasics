@@ -1,0 +1,69 @@
+<header data-bs-theme="dark">
+    <div class="collapse text-bg-dark" id="navbarHeader">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8 col-md-7 py-4">
+                    <h4>Сайт создания рассылок</h4>
+                    <p class="text-body-secondary">Рассылка через Email не просто жива – несмотря на древность
+                        этой технологии, рассылка до сих пор пользуется большой популярностью. И те, кто этим занимался,
+                        знают, что email-рассылка – занятие не самое простое: нужно вкладывать деньги/время/силы
+                        в верстку, избегать бана от почтовых сервисов и так далее. Чтобы упростить себе жизнь,
+                        маркетологи/web-мастеры используют рассылочный сервис – он предоставляет и готовые шаблоны,
+                        и возможности А/Б-тестирования, и инструменты для проверки письма на спам и так далее...</p>
+                </div>
+                <div class="col-sm-4 offset-md-1 py-4">
+                    <h4>Основное меню</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="{% url 'email_newsletter:homepage' %}" class="text-white">Главная страница</a></li>
+                        <li><a href="{% url 'email_newsletter:newsletter' %}" class="text-white">Рассылки</a></li>
+                        <li><a href="{% url 'email_newsletter:client' %}" class="text-white">Клиенты</a></li>
+                        <li><a href="{% url 'email_newsletter:message' %}" class="text-white">Сообщения</a></li>
+                        <li><a href="{% url 'email_newsletter:mailing_report' %}" class="text-white">Отчет проведенных
+                            рассылок</a></li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="navbar navbar-dark bg-dark shadow-sm">
+        <div class="container">
+
+
+            <div class="col-3">
+                <img src="/static/images/handshake.jpg" class="img-fluid" alt="handshake">
+            </div>
+            <ol class="list-unstyled mt-3 mb-6 text-start m-3">
+                <li class="my-0 text-center mr-md-auto font-weight-normal mb-4"></li>
+                {% if user.is_authenticated %}
+                <li><h6 class="my-0 text-center text-secondary mr-md-auto font-weight-normal">Пользователь: {{ user }}</h6>
+                </li>
+                {% else %}
+                <li><h6 class="my-0 text-center text-danger mr-md-auto font-weight-normal">
+                    Для работы на сайте требуется авторизация</h6></li>
+                {% endif %}
+            </ol>
+
+            <ul class="list-unstyled">
+                {% if user.is_authenticated %}
+                <li>
+                    <form id="logout-form" action="{% url 'users:logout' %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="text-white">Выйти</button>
+                    </form>
+                </li>
+                <li><a href="{% url 'users:profile' %}" class="text-white">Профиль</a></li>
+                {% else %}
+                <li><a href="{% url 'users:login' %}" class="text-white">Войти</a></li>
+                <li><a href="{% url 'users:register' %}" class="text-white">Регистрация</a></li>
+                {% endif %}
+            </ul>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader"
+                    aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+        </div>
+    </div>
+</header>

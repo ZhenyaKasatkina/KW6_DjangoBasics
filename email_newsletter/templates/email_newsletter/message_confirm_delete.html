@@ -1,0 +1,39 @@
+{% extends 'email_newsletter/base.html' %}
+{% block content %}
+
+<main>
+    <section class="py-6 text-center container">
+        <div class="row py-lg-5">
+            <div class="col-6 col-md-8 mx-auto">
+                <h5>{{ title }}</h5>
+                <p class="lead text-body-secondary">{{ text }}</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="album py-5 bg-body-tertiary">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-1 g-3">
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <form method="post" action="" class="form-floating text-center">
+                                {% csrf_token %}
+                                <h3> {{ object.subject }}</h3>
+                                <p class="text">{{ object.body }}</p>
+                                <button type="submit" class="p-2 btn btn-success my-2 mb-2"
+                                        role="button">Удалить сообщение
+                                </button>
+                                <a class="p-2 btn btn-dark my-2 mb-2"
+                                   href="{% url 'email_newsletter:message' %}" role="button">
+                                    Отменить удаление. Вернуться к списку сообщений</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}
